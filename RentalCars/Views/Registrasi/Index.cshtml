@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Registrasi";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/register.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <p>Registrasi ke RentCar</p>
+        </div>
+
+        <!-- Ini ke controller -->
+        <form asp-action="Register" method="post" class="registration_form">
+            <div class="form_group">
+                <label for="fullname">Nama Lengkap:</label>
+                <input type="text"
+                       id="fullname"
+                       name="name"
+                       placeholder="Masukkan nama lengkap"
+                       required />
+            </div>
+
+            <div class="form_group">
+                <label for="email">Email:</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       placeholder="Masukkan email"
+                       required />
+            </div>
+
+            <div class="form_group">
+                <label for="password">Password:</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Masukkan password"
+                       required />
+            </div>
+
+            <div class="form_group">
+                <label for="re_password">Re-Password:</label>
+                <input type="password"
+                       id="re_password"
+                       name="re_password"
+                       placeholder="Ulangi password"
+                       required />
+            </div>
+
+            <div class="form_group">
+                <label for="phone">Nomor Telepon:</label>
+                <input type="tel"
+                       id="phone"
+                       name="phone_number"
+                       placeholder="Masukkan nomor telepon"
+                       required />
+            </div>
+
+            <div class="form_group">
+                <label for="address">Alamat:</label>
+                <textarea id="address"
+                          name="address"
+                          placeholder="Masukkan alamat"
+                          required></textarea>
+            </div>
+
+            <button type="submit" class="register_btn">Registrasi</button>
+
+            @if(ViewBag.ErrorMessage != null)
+            {
+                <div class="error_message">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+
+            <p class="login_text">
+                Sudah punya akun? <a href="@Url.Action("Index", "Login")">Login di sini</a>
+            </p>
+        </form>
+    </div>
+</body>
+</html>

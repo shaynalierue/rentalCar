@@ -1,0 +1,195 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var hasDateSelected = ViewBag.HasDateSelected ?? false;
+    int totalPages = ViewBag.TotalPages ?? 0; // Pastikan selalu ada nilai default
+    int currentPage = ViewBag.CurrentPage ?? 1;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+
+    <!-- navbar -->
+    <div class="navbar">
+        <div class="left_navbar">
+            <i id="hamburger-button" class="uil uil-bars"></i>
+            <p id="title">RentCar</p>
+        </div>
+
+        <div class="right_navbar">
+            <ul class="class_menu">
+                @if (User.Identity.IsAuthenticated)
+                {   
+                   @*  <li><a href="@Url.Action("Profile", "Account")" class="nav_item">@User.Identity.Name</a></li *@
+                    <li><a href="#" class="nav_item">@User.Identity.Name</a></li>
+                    <li>
+                        <form asp-controller="Login" asp-action="Logout" method="post">
+                            <button type="submit" class="submitBtn">Logout</button>
+                        </form>
+                    </li>
+                     @* <li><a href="@Url.Action("Logout", "Account")" class="nav_item">Logout</a></li> *@
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Index", "Login")" class="nav_item">Login</a></li>
+                    <li><a href="@Url.Action("Index", "Registrasi")" class="nav_item">Register</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- sidebar -->
+    <div id="sidebar" class="sidebar">
+        <i id="close-button" class="uil uil-times"></i>
+        <a href="@Url.Action("Index", "Home")">Home</a>
+        <a href="@Url.Action("Index", "HistoryRent")">Riwayat Penyewaan</a>
+        <a href="@Url.Action("Index", "ContactUs")">Kontak Kami</a>
+    </div>
+
+    <!-- main -->
+    <main id="content" class="content active">
+        <div class="welcome">
+            <h1>Selamat Datang di Rental Mobil Kami</h1>
+        </div>
+
+       
+        <!-- Form Pencarian Mobil -->
+        <form asp-action="SearchCars" method="post">
+            <div class="container sort_container">
+                <div class="sort_item">
+                    <label for="pickup">Pickup Date:</label>
+                    <input type="date" id="pickup" name="pickup" required />
+                </div>
+
+                <div class="sort_item">
+                    <label for="return">Return Date:</label>
+                    <input type="date" id="return" name="returns" required />
+                </div>
+
+                <div class="sort_item">
+                    <label for="tahun">Filter Tahun Pembuatan:</label>
+                    <select id="tahun" name="tahun">
+                        <option value="">Pilih Tahun</option>
+                        @if (ViewBag.Years != null)
+                        {
+                            foreach (var year in ViewBag.Years)
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="search_button">
+                    <button id="submit_btn" class="submitBtn" type="submit">Cari</button>
+                </div>
+            </div>
+        </form>
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="error-message" style="color: red;">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        <!-- Menampilkan Daftar Mobil Berdasarkan Filter -->
+        @if (hasDateSelected)
+        {
+            <section class="list_cars">
+                <div class="sortirBy">
+                    <label for="sortirby">Sortir Berdasarkan:</label>
+                    <form asp-action="SearchCars" method="post" id="sortForm">
+                        <select id="harga" name="sortOrder" onchange="document.getElementById('sortForm').submit();">
+                            <option value="">Pilih Urutan</option>
+                            <option value="asc">Harga Terendah - Tertinggi</option>
+                            <option value="desc">Harga Tertinggi - Terendah</option>
+                        </select>
+                        <!-- Kirim kembali nilai pickup, returns, dan tahun untuk paginasi -->
+                        <input type="hidden" name="pickup" value="@ViewBag.PickupDate" />
+                        <input type="hidden" name="returns" value="@ViewBag.ReturnDate" />
+                        <input type="hidden" name="tahun" value="@ViewBag.SelectedYear" />
+                    </form>
+                </div>
+
+                <div class="list_container_car">
+                    @if (ViewBag.AvailableCars != null && ViewBag.AvailableCars.Count > 0)
+                    {
+                        @foreach (var car in ViewBag.AvailableCars)
+                        {
+                            <div class="car_card">
+                                <img src="@Url.Content("~/" + car.Image)" alt="@car.Name" />
+                                <h3>@car.Name</h3>
+                                <p>Price: $@car.Price/day</p>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a class="rent_btn" href="@Url.Action("Index", "RentCar", new { carId = car.CarId, pickup = ViewBag.PickupDate, returns = ViewBag.ReturnDate })">
+                                        Sewa Sekarang
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="rent_btn" href="@Url.Action("Index", "Login", new { returnUrl = Url.Action("Index", "RentCar", new { carId = car.CarId }) })">
+                                        Sewa Sekarang
+                                    </a>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>Tidak ada mobil yang dapat ditampilkan untuk tanggal dan tahun yang dipilih.</p>
+                    }
+                </div>
+            </section>
+        }
+       
+
+            <!-- Pagination -->
+
+            <div class="pagination">
+                @if (currentPage > 1)
+                {
+                    <a href="@Url.Action("CheckDate", "Home", new { page = currentPage - 1, sortOrder = ViewBag.SortOrder, pickup = ViewBag.PickupDate, returns = ViewBag.ReturnDate, tahun = ViewBag.SelectedYear })">Previous</a>
+                }
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    if (i == currentPage)
+                    {
+                        <span class="current">@i</span>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("CheckDate", "Home", new { page = i, sortOrder = ViewBag.SortOrder, pickup = ViewBag.PickupDate, returns = ViewBag.ReturnDate, tahun = ViewBag.SelectedYear })">@i</a>
+                    }
+                }
+
+                @if (currentPage < totalPages)
+                {
+                    <a href="@Url.Action("CheckDate", "Home", new { page = currentPage + 1, sortOrder = ViewBag.SortOrder, pickup = ViewBag.PickupDate, returns = ViewBag.ReturnDate, tahun = ViewBag.SelectedYear })">Next</a>
+                }
+            </div>
+        
+
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer">
+            <p>&copy;2024 RenCar App. Semua Hak Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+</body>
+</html>

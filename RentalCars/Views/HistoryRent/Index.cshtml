@@ -1,0 +1,76 @@
+﻿@{
+    var rentalHistory = ViewBag.RentalHistory as List<CarRentalHistory>;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Riwayat Penyewaan Mobil</title>
+    <link rel="stylesheet" href="~/css/historyRent.css" />
+</head>
+<body>
+    <!-- Navbar Top -->
+    <div class="navbar_top">
+        <div class="left_navbar">
+            <p id="title">Riwayat Penyewaan Mobil</p>
+        </div>
+
+        <div class="right_navbar">
+            <p>Hi, <span>@User.Identity.Name</span></p>
+        </div>
+    </div>
+   
+    <!-- Konten Tengah -->
+      <div class="content">
+         <h2>Mobil yang Pernah Disewa</h2>
+
+         <table class="rental_table">
+             <thead>
+                 <tr>
+                     <th>Tanggal Sewa</th>
+                     <th>Mobil</th>
+                     <th>Harga Sewa per Hari</th>
+                     <th>Total Hari</th>
+                     <th>Total Harga</th>
+                     <th>Status Pembayaran</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 @if (rentalHistory != null && rentalHistory.Any())
+                 {
+                    <p>Total data ditemukan: @rentalHistory.Count</p>
+                     @foreach (var rental in rentalHistory)
+                     {
+                         <tr>
+                             <td>@rental.RentalDate.ToString("dd MMM yyyy")</td>
+                             <td>@rental.CarName</td>
+                             <td>$@rental.PricePerDay/day</td>
+                             <td>@rental.TotalDays</td>
+                             <td>$@rental.TotalPrice</td>
+                             <td><span class="status @(rental.PaymentStatus == "Sudah Dibayar" ? "paid" : "unpaid")">@rental.PaymentStatus</span></td>
+                         </tr>
+                     }
+                 }
+                 else
+                 {
+                     <tr>
+                         <td colspan="6" class="no-data">Tidak ada riwayat penyewaan ditemukan.</td>
+                     </tr>
+                 }
+             </tbody>
+         </table>
+     </div> 
+
+    
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer">
+            <p>&copy; 2024 RentCar App. Semua Hak Dilindungi.</p>
+        </div>
+    </footer>
+</body>
+</html>

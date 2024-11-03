@@ -1,0 +1,87 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Navbar */
+.navbar_top {
+    display: flex;
+    top: 0;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+}
+
+    .navbar_top .left_navbar #title {
+        font-size: 24px;
+    }
+
+    .navbar_top .right_navbar p {
+        font-size: 18px;
+    }
+
+/* Konten Tengah */
+.content {
+    margin: 30px 0;
+    text-align: center;
+}
+
+    .content h2 {
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+.rental_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .rental_table th,
+    .rental_table td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .rental_table th {
+        background-color: #f2f2f2;
+        font-size: 18px;
+    }
+
+    .rental_table td {
+        font-size: 16px;
+    }
+
+/* Status Pembayaran */
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+    .status.paid {
+        background-color: green;
+    }
+
+    .status.unpaid {
+        background-color: red;
+    }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 30px;
+}

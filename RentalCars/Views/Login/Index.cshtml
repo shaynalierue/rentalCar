@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- ICON -->
+    <!-- ICONSCOUT ICON  -->
+    <!-- https://iconscout.com/unicons/explore/line -->
+    <link rel="stylesheet"
+          href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <p>Login ke RentCar</p>
+        </div>
+
+        <form asp-action="Index" method="post" class="login_form">
+            <div class="form_group">
+                <label for="username">Username:</label>
+                <input type="text"
+                       id="username"
+                       name="username"
+                       placeholder="Masukkan username"
+                       required />
+            </div>
+
+            <div class="form_group">
+                <label for="password">Password:</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Masukkan password"
+                       required />
+            </div>
+
+            <button type="submit" class="login_btn">Login</button>
+
+            <p class="register_text">
+                Belum punya akun? <a href="@Url.Action("Index", "Registrasi")">Registrasi di sini</a>
+            </p>
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="error-message">@ViewBag.ErrorMessage</div>
+            }
+        </form>
+    </div>
+</body>
+</html>

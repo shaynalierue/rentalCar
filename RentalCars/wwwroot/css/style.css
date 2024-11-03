@@ -1,0 +1,264 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* Navbar container */
+.navbar {
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+    /* position: relative; */
+    /* z-index: 10; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu list */
+.class_menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+    /* Individual menu items */
+    .class_menu li {
+        margin-left: 20px;
+    }
+
+/* Links inside navbar */
+.nav_item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    /* Hover effect for links */
+    .nav_item:hover {
+        background-color: #555;
+        border-radius: 5px;
+    }
+
+/* Left Navbar (Logo and menu icon) */
+.left_navbar {
+    display: flex;
+    align-items: center;
+}
+
+    /* Menu icon styling */
+    .left_navbar i {
+        font-size: 24px;
+        color: white;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+/* Title Styling */
+#title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Right Navbar (Menu items) */
+.right_navbar {
+    display: flex;
+}
+
+.loginBtn {
+    padding: 8px 12px;
+    background-color: indianred;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+    .loginBtn:hover {
+        background-color: #555;
+    }
+
+
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #444;
+    color: white;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+}
+
+    /* Sidebar links */
+    .sidebar a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        margin: 15px 0;
+    }
+
+    /* Show sidebar */
+    .sidebar.show {
+        transform: translateX(0); /* Show when active */
+    }
+
+    /* Close icon styling */
+    .sidebar i {
+        cursor: pointer;
+    }
+
+/* Main */
+.welcome {
+    display: flex;
+    justify-content: center;
+    margin: 10px 10px;
+}
+
+.sort_container {
+    background-color: beige;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*.search_button {
+    margin-left: 30px;
+    padding: 8px 12px;
+    background-color: #555;
+    border-radius: 5px;
+}
+
+    .search_button a {
+        color: white;
+    }*/
+
+.submitBtn {
+    padding: 8px 12px;
+    background-color: indianred;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submitBtn:hover {
+    background-color: #555;
+}
+
+
+
+
+.sort_item {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 15px;
+}
+
+/* ===========================LIST CAR================================================== */
+.sortirBy {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 20px;
+}
+
+.list_container_car {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.car_card {
+    background-color: white;
+    border-radius: 10px;
+    width: 30%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+}
+
+    .car_card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .car_card h3 {
+        margin: 15px 0 10px;
+        font-size: 20px;
+    }
+
+    .car_card p {
+        font-size: 18px;
+        color: #333;
+    }
+
+.rent_btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+    .rent_btn:hover {
+        background-color: #218838;
+    }
+
+/* ==============PAGINATION================= */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 20px;
+}
+
+    .pagination a,
+    .pagination span {
+        padding: 10px 15px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .pagination .current {
+        background-color: #333;
+        color: white;
+        border: 1px solid #333;
+    }
+
+
+/* footer */
+.footer {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: #333;
+    padding: 20px 20px;
+}

@@ -1,0 +1,92 @@
+﻿@{
+    var car = ViewBag.SelectedCar as CarWithImage;
+    var pickupDate = ViewBag.PickupDate as DateTime? ?? DateTime.Now;
+    var returnDate = ViewBag.ReturnDate as DateTime? ?? DateTime.Now.AddDays(1);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sewa Mobil</title>
+    <link rel="stylesheet" href="~/css/rentCar.css" />
+</head>
+<body>
+    <h1 class="page-title">Sewa Mobil</h1>
+
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="error-message" style="color: red;">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+
+    <!-- Slider Gambar Mobil -->
+    <div class="slider">
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <img src="@Url.Content("~/" + car?.Image)" class="slide" id="currentSlide" alt="@car?.Name" />
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+
+
+
+    <!-- Tabel Informasi Mobil -->
+    <div class="info_section">
+        <h2>Informasi Mobil</h2>
+        <table class="info_table">
+            <tr>
+                <td>Tipe Mobil</td>
+                <td>@car?.Year</td>
+            </tr>
+            <tr>
+                <td>Nama Mobil</td>
+                <td>@car?.Name</td>
+            </tr>
+            <tr>
+                <td>Transmisi</td>
+                <td>@car?.Transmission</td> <!-- Menampilkan transmisi -->
+            </tr>
+            <tr>
+                <td>Jumlah Penumpang</td>
+                <td>@car?.PassengerCapacity Orang</td> <!-- Menampilkan jumlah penumpang -->
+            </tr>
+            <tr>
+                <td>Nama Penyewa</td>
+                <td>@User.Identity.Name</td>
+            </tr>
+            <tr>
+                <td>Tanggal Sewa</td>
+                <td>@ViewBag.PickupDate?.ToString("dd MMMM yyyy")</td> <!-- Menampilkan tanggal sewa -->
+            </tr>
+            <tr>
+                <td>Tanggal Pengembalian</td>
+                <td>@ViewBag.ReturnDate?.ToString("dd MMMM yyyy")</td> <!-- Menampilkan tanggal pengembalian -->
+            </tr>
+            <tr>
+                <td>Harga Sewa per Hari</td>
+                <td>$@car?.Price/day</td>
+            </tr>
+            <tr>
+                <td>Total Harga Sewa</td>
+                <td>$@car?.TotalPrice</td> <!-- Menampilkan total harga sewa -->
+            </tr>
+        </table>
+    </div>
+
+
+
+    <!-- Tombol Sewa -->
+    <form asp-action="CreateRental" method="post">
+        <input type="hidden" name="carId" value="@car?.CarId" />
+        <input type="hidden" name="pickup" value="@pickupDate.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="returns" value="@returnDate.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="totalPrice" value="@car?.TotalPrice" />
+        <button type="submit" class="rent_btn">Sewa Sekarang</button>
+    </form>
+
+
+    <script src="~/js/rentcar.js"></script>
+</body>
+</html>
